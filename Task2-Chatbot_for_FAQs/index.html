@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FAQ Chatbot - CodeAlpha Task 2 (Tested)</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="chatbox">
+  <!-- Pre-loaded test conversation for demo -->
+  <div class="message bot">🤖 Hi! Welcome to our FAQ Chatbot. Ask me about features, pricing, support!</div>
+  
+  <!-- Test 1: hi -->
+  <div class="message user">hi</div>
+  <div class="message bot">Hello! I'm your FAQ chatbot. Ask me about features, pricing, or support!</div>
+  
+  <!-- Test 2: help -->
+  <div class="message user">help</div>
+  <div class="message bot">I can answer your FAQs instantly. Try asking about our features, pricing, or support options.</div>
+  
+  <!-- Test 3: features -->
+  <div class="message user">features</div>
+  <div class="message bot">Our platform includes AI-powered analytics, real-time processing, multi-language support, and seamless integrations.</div>
+  
+  <!-- Test 4: pricing -->
+  <div class="message user">pricing</div>
+  <div class="message bot">We offer flexible pricing plans: Free tier, Pro ($19/month), Enterprise (Custom). Contact sales for details.</div>
+  
+  <!-- Test 5: support -->
+  <div class="message user">support</div>
+  <div class="message bot">24/7 support via email (support@company.com), live chat, and phone (+1-800-123-4567).</div>
+  
+  <!-- Test 6: ok -->
+  <div class="message user">ok</div>
+  <div class="message bot">Great! Is there anything else I can help you with?</div>
+  
+  <!-- Test 7: thankyou -->
+  <div class="message user">thankyou</div>
+  <div class="message bot">You're welcome! Have a great day! 😊</div>
+</div>
+
+<input type="text" id="userInput" placeholder="Continue chatting... (features, pricing, support)" />
+<button id="sendBtn">Send</button>
+
+<script>
+// Complete FAQ Dataset with all test cases
+const faqs = [
+  // Greetings & basic
+  {question: "hi", answer: "Hello! I'm your FAQ chatbot. Ask me about features, pricing, or support!"},
+  {question: "hello", answer: "Hi there! How can I help you today?"},
+  {question: "hey", answer: "Hey! What would you like to know?"},
+  
+  // Help commands
+  {question: "help", answer: "I can answer your FAQs instantly. Try asking about our features, pricing, or support options."},
+  {question: "how can you help", answer: "I match your questions to our FAQ database and provide instant, accurate answers!"},
+  
+  // Product features
+  {question: "features", answer: "Our platform includes AI-powered analytics, real-time processing, multi-language support, and seamless integrations."},
+  
+  // Pricing
+  {question: "pricing", answer: "We offer flexible pricing plans: Free tier, Pro ($19/month), Enterprise (Custom). Contact sales for details."},
+  {question: "price", answer: "Pricing starts at Free, Pro plan $19/month, Enterprise custom pricing available."},
+  
+  // Support
+  {question: "support", answer: "24/7 support via email (support@company.com), live chat, and phone (+1-800-123-4567)."},
+  
+  // Closing
+  {question: "ok", answer: "Great! Is there anything else I can help you with?"},
+  {question: "thankyou", answer: "You're welcome! Have a great day! 😊"},
+  {question: "thanks", answer: "Happy to help! Come back anytime! 😊"},
+  {question: "bye", answer: "Goodbye! Have a wonderful day!"}
+];
+
+// Improved similarity matching
+function similarity(str1, str2) {
+  str1 = str1.toLowerCase().trim();
+  str2 = str2.toLowerCase().trim();
+  
+  if (str1.includes(str2) || str2.includes(str1)) return 1.0;
+  
+  const words1 = new Set(str1.split(/\s+/).filter(w => w.length > 1));
+  const words2 = new Set(str2.split(/\s+/).filter(w => w.length > 1));
+  
+  let common = 0;
+  for (const word of words1) {
+    if (words2.has(word)) common++;
+  }
+  
+  return common / Math.max(words1.size, words2.size || 1);
+}
+
+function findAnswer(input) {
+  let bestMatch = null;
+  let highestScore = 0;
+  
+  for (const faq of faqs) {
+    const score = similarity(input, faq.question);
+    if (score > highestScore) {
+      highestScore = score;
+      bestMatch = faq.answer;
+    }
+  }
+  
+  return highestScore > 0.25 ? bestMatch : "Sorry, try: features, pricing, support, help, hi, ok, thankyou";
+}
+
+const chatbox = document.getElementById("chatbox");
+const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+
+function appendMessage(text, sender) {
+  const msgDiv = document.createElement("div");
+  msgDiv.classList.add("message", sender);
+  msgDiv.textContent = text;
+  chatbox.appendChild(msgDiv);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+sendBtn.onclick = () => {
+  const userText = userInput.value.trim();
+  if (!userText) return;
+  
+  appendMessage(userText, "user");
+  userInput.value = "";
+  
+  setTimeout(() => {
+    const answer = findAnswer(userText);
+    appendMessage(answer, "bot");
+  }, 500);
+};
+
+userInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendBtn.click();
+});
+</script>
+</body>
+</html>
