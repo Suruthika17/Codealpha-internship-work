@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAlpha Task 4: Real-Time Object Detection & Tracking</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.1"></script>
+</head>
+<body>
+    <!-- ULTIMATE DARK BACKGROUND SYSTEM -->
+    <div class="particles" id="particles"></div>
+    <div class="shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="main-container">
+        <div class="container">
+            <h1>🔍 AI Object Detection & Tracking</h1>
+            
+            <!-- PERFECTLY CENTERED VIDEO -->
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="startBtn">▶️ Start Detection</button>
+                <button id="stopBtn" disabled>⏹️ Stop Camera</button>
+                <button id="clearTracks">🗑️ Clear Tracks</button>
+            </div>
+            
+            <div class="status">
+                <div id="fps">FPS: --</div>
+                <div id="modelStatus">Model: Loading...</div>
+                <div id="objectsCount">Objects: 0</div>
+            </div>
+            
+            <!-- DETECTION PANEL WITH OBJECT IMAGES -->
+            <div id="detections" class="detections-panel">
+                <div class="no-detection">Click Start to see objects with images...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
