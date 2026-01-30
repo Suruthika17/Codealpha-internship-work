@@ -5,7 +5,9 @@ Completed three web development tasks during my **online** CodeAlpha internship,
 ## Projects Overview 📋
 
 | 🎯 Task 1: Language Translation Tool | Real-time text translation interface using translation APIs. | HTML, CSS, JS, Translation API | Open `Task1-Language_Translation_Tool/index.html` |
+
 | 💬 Task 2: Chatbot for FAQs | Interactive FAQ chatbot with dynamic responses. | HTML, CSS, JS | Open `Task2-Chatbot_for_FAQs/index.html` |
+
 | 👁️ Task 3: Object Detection & Tracking | Real-time object detection in video streams (webcam support). | HTML, CSS, JS, OpenCV/YOLO integration | Open `Task3-Object-Detection-and-Tracking/index.html` |
 
 ## Setup & Run ⚙️
